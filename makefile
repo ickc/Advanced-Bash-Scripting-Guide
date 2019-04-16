@@ -1,7 +1,7 @@
 SHELL := /usr/bin/env bash
 
 pandocArgs = --atx-headers --wrap=none -M 'title: Advanced Bash-Scripting Guide—An in-depth exploration of the art of shell scripting' -M 'author: Mendel Cooper' --pdf-engine=lualatex
-outputFormats = docx pdf epub
+outputFormats = docx pdf epub html
 outFiles = $(foreach format,$(outputFormats),abs-guide.$(format))
 
 all: $(outFiles)
@@ -16,7 +16,7 @@ clean:
 # 	pandoc $(pandocArgs) -o $@ $< -F ./codeblock_add_sh_class.py
 
 define OUTPUT
-abs-guide.$(1): abs-guide.html
+abs-guide.$(1): abs-guide-original.html
 	pandoc $(pandocArgs) -s -o $$@ <(iconv -f ISO-8859-1 -t utf-8 $$<) -f html -F ./codeblock_add_sh_class.py
 endef
 
